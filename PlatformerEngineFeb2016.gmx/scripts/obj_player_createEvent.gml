@@ -2,6 +2,7 @@ maxRunSpeed = 5; //the maximum runspeed
 maxFallSpeed = 5; //the terminal velocity
 jumpSpeed = 5; //the speed that you jump
 runAccel = .5;
+yprev=0;
 
 keyboard_set_map(ord('w'), vk_up);
 keyboard_set_map(ord('a'), vk_left);

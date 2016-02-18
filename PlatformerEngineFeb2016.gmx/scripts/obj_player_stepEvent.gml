@@ -24,45 +24,45 @@ if (yVel < maxFallSpeed) {
     }
 }
 
+/*LANDING CODE:then y positions*/
+if (place_meeting(x,y+yVel,obj_block) == false) {
+    y +=yVel;
+} else {
+    for (i = 0; i <= floor(yVel)+1; i++) {
+    xproportion = (1-sqr(y-yprevious)/(sqr(yVel) + sqr(xVel)));
+        if (place_meeting(x,y+i,obj_block)==true) {
+            y += i;
+            yVel = 0;
+            break;
+        }
+    }
+}
+
+/*AM I IN THE AIR????!??!!??!?!?!?!?!1?!?!?!ELEVEN!?!?!*/
+if (place_meeting(x,y+1,obj_block) == true) {
+    inAir = false;
+} else {
+    inAir = true;
+}
 
 /*JUMPING CODE YEAH HRRNGH BIG BUTTS*/
 
 if ((!inAir) and (keyboard_check_pressed(vk_space))) {
     yVel = -jumpSpeed;
-    inAir = true;
 }
 
-/*then positions*/
-if (place_meeting(x,y+yVel,obj_block) == false) {
-    y+=yVel;
-} else {
-    for (i = 0; i <= floor(yVel)+1; i++) {
-        if (place_meeting(x,y+i,obj_block)==true) {
-            y += i;
-            inAir = false;
-            //yVel = 0;//this resets velocity to 0, otherwise if you fall off a block, you will fall at the speed you were falling when you landed. -E
-            break;
-        }
-    }
-    yprev = y;
-    //move_contact_solid(270,yVel);
-    // the x proportion that you have left to move, that needs to be influenced by friction
-    xproportion = (1-sqr(y-yprev)/(sqr(yVel) + sqr(xVel)));
-}
 
-//x+=xproportion * xVel;
 xVel = xproportion * xVel;
-//x+=xVel;
-if (place_meeting(x+xVel,y,obj_block)==false) {
-    //if there is no block at x+xVel
+
+if (!place_meeting(x+xVel,y-16,obj_block)) {
     x+=xVel;
-    //move to x+xVel
 }
+
+/*am I lik movin horz?*/
 if (x-xprevious != 0) {
     inMotion = true;
 } else {
     inMotion = false;
 }
-
 x = x mod room_width;
 y = y mod room_height;
