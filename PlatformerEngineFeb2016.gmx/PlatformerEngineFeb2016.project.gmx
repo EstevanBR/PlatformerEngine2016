@@ -10,6 +10,11 @@
   </sprites>
   <backgrounds name="background"/>
   <paths name="paths"/>
+  <scripts name="scripts">
+    <script>scripts\obj_player_stepEvent.gml</script>
+    <script>scripts\obj_player_createEvent.gml</script>
+    <script>scripts\obj_player_drawEvent.gml</script>
+  </scripts>
   <objects name="objects">
     <object>objects\obj_player</object>
     <object>objects\obj_block</object>

@@ -11,64 +11,41 @@
     <event eventtype="0" enumb="0">
       <action>
         <libid>1</libid>
-        <id>603</id>
-        <kind>7</kind>
+        <id>601</id>
+        <kind>0</kind>
         <userelative>0</userelative>
         <isquestion>0</isquestion>
         <useapplyto>-1</useapplyto>
-        <exetype>2</exetype>
-        <functionname></functionname>
+        <exetype>1</exetype>
+        <functionname>action_execute_script</functionname>
         <codestring></codestring>
         <whoName>self</whoName>
         <relative>0</relative>
         <isnot>0</isnot>
         <arguments>
           <argument>
-            <kind>1</kind>
-            <string>maxRunSpeed = 5; //the maximum runspeed
-maxFallSpeed = 5; //the terminal velocity
-jumpSpeed = 5; //the speed that you jump
-runAccel = .5;
-
-keyboard_set_map(ord('w'), vk_up);
-keyboard_set_map(ord('a'), vk_left);
-keyboard_set_map(ord('s'), vk_down);
-keyboard_set_map(ord('d'), vk_right);
-/*
-keyboard_set_map(vk_up, ord('w'));
-keyboard_set_map(vk_left, ord('a'));
-keyboard_set_map(vk_down, ord('s'));
-keyboard_set_map(vk_right, ord('d'));
-*/
-sFriction = 0.85;
-sGravity = .25;
-yVel = 0;
-xVel = 0;
-
-inAir = true;
-inMotion = false;
-
-enum facing {
-    left = -1,
-    neutral = 0,
-    right = 1
-}
-/*face:
-    -1 = left
-    0 = neither
-    1 = right
-*/
-
-
-/*
-How to make a platformer:
-    1. Just do it
-
-Notes:
-    1. for physics:
-        a. velocity then position
-*/
-</string>
+            <kind>9</kind>
+            <script>obj_player_createEvent</script>
+          </argument>
+          <argument>
+            <kind>0</kind>
+            <string></string>
+          </argument>
+          <argument>
+            <kind>0</kind>
+            <string></string>
+          </argument>
+          <argument>
+            <kind>0</kind>
+            <string></string>
+          </argument>
+          <argument>
+            <kind>0</kind>
+            <string></string>
+          </argument>
+          <argument>
+            <kind>0</kind>
+            <string></string>
           </argument>
         </arguments>
       </action>
@@ -76,89 +53,41 @@ Notes:
     <event eventtype="3" enumb="0">
       <action>
         <libid>1</libid>
-        <id>603</id>
-        <kind>7</kind>
+        <id>601</id>
+        <kind>0</kind>
         <userelative>0</userelative>
         <isquestion>0</isquestion>
         <useapplyto>-1</useapplyto>
-        <exetype>2</exetype>
-        <functionname></functionname>
+        <exetype>1</exetype>
+        <functionname>action_execute_script</functionname>
         <codestring></codestring>
         <whoName>self</whoName>
         <relative>0</relative>
         <isnot>0</isnot>
         <arguments>
           <argument>
-            <kind>1</kind>
-            <string>xproportion = 1;
-
-/*velocities first*/
-
-/*RUNNING F YEAH!!!*/
-
-if (!inAir) {
-    if (keyboard_check(vk_left) ){
-        xVel-=runAccel;
-    }
-    if (keyboard_check(vk_right)){
-        xVel+=runAccel;
-    }
-    xVel*=sFriction;
-}
-
-/*GRAVITY FALLING CODE*/
-
-if (yVel &lt; maxFallSpeed) {
-    if (yVel+sGravity &lt; maxFallSpeed) {
-        yVel += sGravity;
-    } else {
-        yVel = maxFallSpeed
-    }
-}
-
-
-/*JUMPING CODE YEAH HRRNGH BIG BUTTS*/
-
-if ((!inAir) and (keyboard_check_pressed(vk_space))) {
-    yVel = -jumpSpeed;
-    inAir = true;
-}
-
-/*then positions*/
-if (place_meeting(x,y+yVel,obj_block) == false) {
-    y+=yVel;
-} else {
-    for (i = 0; i &lt;= floor(yVel)+1; i++) {
-        if (place_meeting(x,y+i,obj_block)==true) {
-            y += i;
-            inAir = false;
-            //yVel = 0;//this resets velocity to 0, otherwise if you fall off a block, you will fall at the speed you were falling when you landed. -E
-            break;
-        }
-    }
-    yprev = y;
-    //move_contact_solid(270,yVel);
-    // the x proportion that you have left to move, that needs to be influenced by friction
-    xproportion = (1-sqr(y-yprev)/(sqr(yVel) + sqr(xVel)));
-}
-
-//x+=xproportion * xVel;
-xVel = xproportion * xVel;
-//x+=xVel;
-if (place_meeting(x+xVel,y,obj_block)==false) {
-    //if there is no block at x+xVel
-    x+=xVel;
-    //move to x+xVel
-}
-if (x-xprevious != 0) {
-    inMotion = true;
-} else {
-    inMotion = false;
-}
-
-x = x mod room_width;
-y = y mod room_height;
-</string>
+            <kind>9</kind>
+            <script>obj_player_stepEvent</script>
+          </argument>
+          <argument>
+            <kind>0</kind>
+            <string></string>
+          </argument>
+          <argument>
+            <kind>0</kind>
+            <string></string>
+          </argument>
+          <argument>
+            <kind>0</kind>
+            <string></string>
+          </argument>
+          <argument>
+            <kind>0</kind>
+            <string></string>
+          </argument>
+          <argument>
+            <kind>0</kind>
+            <string></string>
           </argument>
         </arguments>
       </action>
@@ -166,26 +95,41 @@ y = y mod room_height;
     <event eventtype="8" enumb="0">
       <action>
         <libid>1</libid>
-        <id>603</id>
-        <kind>7</kind>
+        <id>601</id>
+        <kind>0</kind>
         <userelative>0</userelative>
         <isquestion>0</isquestion>
         <useapplyto>-1</useapplyto>
-        <exetype>2</exetype>
-        <functionname></functionname>
+        <exetype>1</exetype>
+        <functionname>action_execute_script</functionname>
         <codestring></codestring>
         <whoName>self</whoName>
         <relative>0</relative>
         <isnot>0</isnot>
         <arguments>
           <argument>
-            <kind>1</kind>
-            <string>draw_sprite(sprite_index, image_index,x,y);
-//draw_text(x,y-10,xVel);
-draw_text(64,10,"xVel is " + string(xVel));
-draw_text(64,20,"inAir is" + string(inAir));
-draw_text(64,30,"y is" + string(y));
-</string>
+            <kind>9</kind>
+            <script>obj_player_drawEvent</script>
+          </argument>
+          <argument>
+            <kind>0</kind>
+            <string></string>
+          </argument>
+          <argument>
+            <kind>0</kind>
+            <string></string>
+          </argument>
+          <argument>
+            <kind>0</kind>
+            <string></string>
+          </argument>
+          <argument>
+            <kind>0</kind>
+            <string></string>
+          </argument>
+          <argument>
+            <kind>0</kind>
+            <string></string>
           </argument>
         </arguments>
       </action>
