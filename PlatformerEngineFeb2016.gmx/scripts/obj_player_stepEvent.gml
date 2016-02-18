@@ -1,20 +1,30 @@
-xproportion = 1;
-
 /*velocities first*/
 
-/*RUNNING F YEAH!!!*/
+/*SETTING X VELOCITY*/
 
 if (!inAir) {
-    if (keyboard_check(vk_left) and place_meeting(x-1,y,obj_block) == false){
-        xVel-=runAccel;
+    if (keyboard_check(vk_left) and !keyboard_check(vk_right) and place_meeting(x-1,y,obj_block) == false){
+        if (abs(xVel-runAccel) < maxRunSpeed) {
+            xVel-=runAccel;
+        } else {
+            xVel = -maxRunSpeed;
+        }
+        facing = facing.left;
     }
-    if (keyboard_check(vk_right) and place_meeting(x+1,y,obj_block) == false){
-        xVel+=runAccel;
+    if (keyboard_check(vk_right) and !keyboard_check(vk_left) and place_meeting(x+1,y,obj_block) == false){
+        if (xVel+runAccel < maxRunSpeed) {
+            xVel+=runAccel;
+        } else {
+            xVel = maxRunSpeed;
+        }
+        facing = facing.right;
     }
-    xVel*=sFriction;
+    if (!keyboard_check(vk_left) and !keyboard_check(vk_right)) {
+        xVel*=sFriction;
+    }
 }
 
-/*GRAVITY FALLING CODE*/
+/*ADDING GRAVITY TO Y VELOCITY*/
 
 if (yVel < maxFallSpeed) {
     if (yVel+sGravity < maxFallSpeed) {
@@ -24,53 +34,66 @@ if (yVel < maxFallSpeed) {
     }
 }
 
-/*LANDING CODE:then y positions*/
-if (place_meeting(x,y+yVel,obj_block) == false) {
-    y +=yVel;
-} else {
-    yVel = 0;
-    while(place_meeting(x,y+1,obj_block) == false) {
-        y+=1;
-        //yVel = 0;
-    }
-}
-
-/*AM I IN THE AIR????!??!!??!?!?!?!?!1?!?!?!ELEVEN!?!?!*/
-if (place_meeting(x,y+1,obj_block) == true) {
-    inAir = false;
-} else {
-    inAir = true;
-}
-
-/*JUMPING CODE YEAH HRRNGH BIG BUTTS*/
-
-if ((!inAir) and (keyboard_check_pressed(vk_space))) {
-    yVel = -jumpSpeed;
-}
-
-
-xVel = xproportion * xVel;
-
+/* MOVE X*/
 if (place_meeting(x+xVel,y,obj_block) == false) {
         x+=xVel;
 } else {
     xVel = 0;
     while(place_meeting(x+1*facing,y,obj_block) == false) {
         x+=1*facing;
-        //xVel = 0;
     }
 }
 
-/*am I lik movin horz?*/
+
+/*LANDING CODE:then y positions*/
+if (place_meeting(x,y+yVel,obj_block) == false) {
+    y +=yVel;
+    inAir = true;
+} else {
+    inAir = false;
+    xproportion = (1-sqr(y-yprevious)/(sqr(yVel) + sqr(xVel)));
+    xVel = xproportion * xVel;
+    yVel = 0;
+    while(place_meeting(x,y+1,obj_block) == false) {
+        y+=1;
+    }
+}
+
+/*JUMPING CODE*/
+if ((!inAir) and (keyboard_check_pressed(vk_space))) {
+    yVel = -jumpSpeed;
+}
+
+/*AM I X MOVING?*/
 if (x-xprevious != 0) {
     inMotion = true;
-    if (x-xprevious > 0) {
-        facing = facing.right;
-    } else {
-        facing = facing.left;
-    }
 } else {
     inMotion = false;
 }
+
+/******************************************/
+/**************SETTING STATES**************/
+if (inAir == false and inMotion == false) {
+    state = state.idle;
+}
+if (inAir == false and inMotion == true) {
+    state = state.running;
+}
+if (inAir = true and yprevious>y) {
+    state = state.jumping;
+}
+if (inAir = true and y>yprevious) {
+    state = state.falling;
+}
+/**************SETTING STATES**************/
+/******************************************/
+
+/*
 x = x mod room_width;
 y = y mod room_height;
+if (x<0) {
+    x = room_height-abs(x);
+}
+if (y<0) {
+    y = room_height-abs(y);
+}*/
