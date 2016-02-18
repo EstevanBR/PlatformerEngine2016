@@ -28,9 +28,9 @@ if (yVel < maxFallSpeed) {
 if (place_meeting(x,y+yVel,obj_block) == false) {
     y +=yVel;
 } else {
-    for (i = 0; i <= floor(yVel)+1; i++) {
+    for (i = 0; i <= yVel; i++) {
     xproportion = (1-sqr(y-yprevious)/(sqr(yVel) + sqr(xVel)));
-        if (place_meeting(x,y+i,obj_block)==true) {
+        if (place_meeting(x,y +i,obj_block)==true) {
             y += i;
             yVel = 0;
             break;
@@ -54,8 +54,8 @@ if ((!inAir) and (keyboard_check_pressed(vk_space))) {
 
 xVel = xproportion * xVel;
 
-if (!place_meeting(x+xVel,y-16,obj_block)) {
-    x+=xVel;
+if (place_meeting(x+xVel,y,obj_block) == false) {
+        x+=xVel;
 }
 
 /*am I lik movin horz?*/
