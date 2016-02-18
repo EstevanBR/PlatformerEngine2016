@@ -5,10 +5,10 @@ xproportion = 1;
 /*RUNNING F YEAH!!!*/
 
 if (!inAir) {
-    if (keyboard_check(vk_left) ){
+    if (keyboard_check(vk_left) and place_meeting(x-1,y,obj_block) == false){
         xVel-=runAccel;
     }
-    if (keyboard_check(vk_right)){
+    if (keyboard_check(vk_right) and place_meeting(x+1,y,obj_block) == false){
         xVel+=runAccel;
     }
     xVel*=sFriction;
@@ -28,13 +28,10 @@ if (yVel < maxFallSpeed) {
 if (place_meeting(x,y+yVel,obj_block) == false) {
     y +=yVel;
 } else {
-    for (i = 0; i <= yVel; i++) {
-    xproportion = (1-sqr(y-yprevious)/(sqr(yVel) + sqr(xVel)));
-        if (place_meeting(x,y +i,obj_block)==true) {
-            y += i;
-            yVel = 0;
-            break;
-        }
+    yVel = 0;
+    while(place_meeting(x,y+1,obj_block) == false) {
+        y+=1;
+        //yVel = 0;
     }
 }
 
@@ -56,11 +53,22 @@ xVel = xproportion * xVel;
 
 if (place_meeting(x+xVel,y,obj_block) == false) {
         x+=xVel;
+} else {
+    xVel = 0;
+    while(place_meeting(x+1*facing,y,obj_block) == false) {
+        x+=1*facing;
+        //xVel = 0;
+    }
 }
 
 /*am I lik movin horz?*/
 if (x-xprevious != 0) {
     inMotion = true;
+    if (x-xprevious > 0) {
+        facing = facing.right;
+    } else {
+        facing = facing.left;
+    }
 } else {
     inMotion = false;
 }
