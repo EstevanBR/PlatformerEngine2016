@@ -128,36 +128,71 @@ if ((!inAir) and (keyboard_check_pressed(vk_space))) {
 if (place_meeting(x,y+yVel,obj_block) == false) {
     y+=yVel;
 } else {
-    for (i = 0; i &lt;= floor(yVel)+1; i++) {
+    /*for (i = 0; i &lt;= floor(yVel)+1; i++) {
         if (place_meeting(x,y+i,obj_block)==true) {
             y += i;
             inAir = false;
             //yVel = 0;//this resets velocity to 0, otherwise if you fall off a block, you will fall at the speed you were falling when you landed. -E
             break;
         }
-    }
+    }*/
     yprev = y;
-    //move_contact_solid(270,yVel);
+    move_contact_all(270,yVel);
+    inAir = false;
     // the x proportion that you have left to move, that needs to be influenced by friction
     xproportion = (1-sqr(y-yprev)/(sqr(yVel) + sqr(xVel)));
+    yVel = 0;
 }
 
-//x+=xproportion * xVel;
-xVel = xproportion * xVel;
-//x+=xVel;
-if (place_meeting(x+xVel,y,obj_block)==false) {
+
+xVel *= xproportion;
+
+if (!place_meeting(x+xVel,y-1,obj_block)) {
     //if there is no block at x+xVel
     x+=xVel;
     //move to x+xVel
-}
-if (x-xprevious != 0) {
-    inMotion = true;
 } else {
-    inMotion = false;
+    move_contact_all(point_direction(x,y,x+xVel,y), abs(xVel));
+    move_outside_all(point_direction(x,y,x-xVel,y), abs(xVel)+10);
+    xVel = 0;
 }
 
+if (x-xprevious &lt; 0.0000005) {
+    inMotion = false;
+} else {
+    inMotion = true;
+}
+//optimization
+//inMotion = !(x-xprevious &lt; 0.000005)
+
+/*
 x = x mod room_width;
 y = y mod room_height;
+*/
+</string>
+          </argument>
+        </arguments>
+      </action>
+    </event>
+    <event eventtype="7" enumb="0">
+      <action>
+        <libid>1</libid>
+        <id>603</id>
+        <kind>7</kind>
+        <userelative>0</userelative>
+        <isquestion>0</isquestion>
+        <useapplyto>-1</useapplyto>
+        <exetype>2</exetype>
+        <functionname></functionname>
+        <codestring></codestring>
+        <whoName>self</whoName>
+        <relative>0</relative>
+        <isnot>0</isnot>
+        <arguments>
+          <argument>
+            <kind>1</kind>
+            <string>x = xstart;
+y = ystart;
 </string>
           </argument>
         </arguments>
@@ -182,9 +217,18 @@ y = y mod room_height;
             <kind>1</kind>
             <string>draw_sprite(sprite_index, image_index,x,y);
 //draw_text(x,y-10,xVel);
-draw_text(64,10,"xVel is " + string(xVel));
-draw_text(64,20,"inAir is" + string(inAir));
-draw_text(64,30,"y is" + string(y));
+messages = ds_list_create();
+ds_list_add(messages,
+           "xVel is " + string(xVel),
+           "inAir is" + string(inAir),
+           "x is " + string(x),
+           "y is " + string(y),
+           "!pm(blah on ground)" + string(!place_meeting(x+xVel,y,obj_block)));
+size = ds_list_size(messages);
+
+for (var i = 0; i&lt;size; i++) {
+    draw_text(64,10*(i+1),messages[| i]);
+}
 </string>
           </argument>
         </arguments>
