@@ -9,7 +9,7 @@ if (!inAir) {
         } else {
             xVel = -maxRunSpeed;
         }
-        facing = facing.left;
+        //facing = facing.left;
     }
     if (keyboard_check(vk_right) and !keyboard_check(vk_left) and place_meeting(x+1,y,obj_block) == false){
         if (xVel+runAccel < maxRunSpeed) {
@@ -17,7 +17,7 @@ if (!inAir) {
         } else {
             xVel = maxRunSpeed;
         }
-        facing = facing.right;
+        //facing = facing.right;
     }
     if (!keyboard_check(vk_left) and !keyboard_check(vk_right)) {
         xVel*=sFriction;
@@ -84,6 +84,14 @@ if (inAir = true and yprevious>y) {
 }
 if (inAir = true and y>yprevious) {
     state = state.falling;
+}
+
+if (x > xprevious) {
+    facing = facing.right;
+}
+
+if (xprevious > x) {
+    facing = facing.left
 }
 /**************SETTING STATES**************/
 /******************************************/
