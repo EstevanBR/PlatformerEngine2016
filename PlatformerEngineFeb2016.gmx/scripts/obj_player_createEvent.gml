@@ -7,10 +7,10 @@ keyboard_set_map(ord('D'), vk_right);
 
 maxRunSpeed = 5; //the maximum runspeed
 maxFallSpeed = 5; //the terminal velocity
-jumpSpeed = 5; //the speed that you jump
-runAccel = 0.25;
+jumpSpeed = 8; //the speed that you jump
+runAccel = 0.5;
 xproportion = 1;
-sFriction = 0.85;
+sFriction = 0.75;
 sGravity = 0.25;
 yVel = 0;
 xVel = 0;
