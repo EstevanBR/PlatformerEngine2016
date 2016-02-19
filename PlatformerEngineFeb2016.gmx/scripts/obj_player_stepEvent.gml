@@ -1,5 +1,3 @@
-/*velocities first*/
-
 /*SETTING X VELOCITY*/
 
 if (!inAir) {
@@ -36,9 +34,9 @@ if (yVel < maxFallSpeed) {
 
 /* MOVE X*/
 if (place_meeting(x+xVel,y,obj_block) == false) {
-        x+=xVel;
+        x=x+xVel;
 } else {
-    xVel = 0;
+    //xVel = 0;
     while(place_meeting(x+1*facing,y,obj_block) == false) {
         x+=1*facing;
     }
@@ -95,13 +93,3 @@ if (xprevious > x) {
 }
 /**************SETTING STATES**************/
 /******************************************/
-
-/*
-x = x mod room_width;
-y = y mod room_height;
-if (x<0) {
-    x = room_height-abs(x);
-}
-if (y<0) {
-    y = room_height-abs(y);
-}*/

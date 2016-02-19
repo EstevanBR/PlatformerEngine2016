@@ -7,6 +7,8 @@
   <sounds name="sound"/>
   <sprites name="sprites">
     <sprite>sprites\spr_16x16Block</sprite>
+    <sprite>sprites\spr_32x16SlopeRight</sprite>
+    <sprite>sprites\spr_32x16SlopeLeft</sprite>
     <sprite>sprites\spr_player</sprite>
   </sprites>
   <backgrounds name="background"/>
@@ -15,10 +17,15 @@
     <script>scripts\obj_player_stepEvent.gml</script>
     <script>scripts\obj_player_createEvent.gml</script>
     <script>scripts\obj_player_drawEvent.gml</script>
+    <script>scripts\script3.gml</script>
   </scripts>
   <objects name="objects">
     <object>objects\obj_player</object>
-    <object>objects\obj_block</object>
+    <objects name="Blocks">
+      <object>objects\obj_wide_slope_left</object>
+      <object>objects\obj_wide_slope_right</object>
+      <object>objects\obj_block</object>
+    </objects>
   </objects>
   <rooms name="rooms">
     <room>rooms\test_room</room>
